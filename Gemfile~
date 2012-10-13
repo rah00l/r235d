@@ -1,0 +1,68 @@
+source 'http://rubygems.org'
+
+gem 'rails', '3.1.4'
+gem "net-ssh", "~> 2.4.0"
+
+# Bundle edge Rails instead:
+# gem 'rails',     :git => 'git://github.com/rails/rails.git'
+
+gem 'mysql2'
+gem 'therubyracer'
+gem 'delayed_job_active_record'
+gem 'exception_notification'
+
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+#  gem 'sass-rails',   '~> 3.1.4'
+  gem 'sass-rails', :github => "rails/sass-rails", :branch => "3-1-stable"
+  gem 'coffee-rails', '~> 3.1.1'
+
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  # gem 'therubyracer'
+
+  gem 'uglifier', '>= 1.0.3'
+end
+##
+group :development do
+  gem 'rails-dev-boost', :git => 'git://github.com/thedarkone/rails-dev-boost.git', :require => 'rails_development_boost'
+end
+
+gem 'jquery-rails'
+#gem 'web-app-theme', '~> 0.8.0'
+gem "spree_scaffold", :git => 'git://github.com/sebastyuiop/spree_scaffold.git'
+# To use ActiveModel has_secure_password
+# gem 'bcrypt-ruby', '~> 3.0.0'
+
+# Use unicorn as the web server
+ gem 'unicorn'
+
+gem 'linecache19', :git => 'git://github.com/mark-moseley/linecache'
+gem 'ruby-debug-base19x', '~> 0.11.30.pre4'
+gem 'ruby-debug19'
+
+
+# Deploy with Capistrano
+ gem 'capistrano'
+
+group :test do
+  # Pretty printed test output
+  gem 'cucumber-rails'
+  gem 'database_cleaner'
+#  gem "capybara"
+#  gem 'turn', '0.8.2', :require => false
+end
+
+gem "spree_paypal_express", "~> 1.1.0.beta"
+gem 'spree_promo', :path => 'custom-gems/spree_promo'
+gem 'spree_auth', :path => 'custom-gems/spree_auth'
+gem 'spree','1.0.3'
+gem 'import_products', :path => 'custom-gems/spree_import_products'
+gem 'spree_gateway', :git => 'git://github.com/spree/spree_gateway.git' # make sure to include after spre
+gem 'spree_comments', :git => 'https://github.com/spree/spree_comments.git'
+gem 'spree_user_order_comments', :git => 'https://github.com/raskhadafi/spree-user-order-comments.git'
+gem 'spree_usa_epay'
+gem 'spree_skrill'
+gem 'active_utils' ,:path => 'custom-gems/active_utils'
+gem 'spree_active_shipping' ,:path => 'custom-gems/spree_active_shipping'
+gem 'jstree-rails', :git => 'git://github.com/tristanm/jstree-rails.git'
