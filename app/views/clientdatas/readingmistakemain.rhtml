@@ -205,15 +205,15 @@ output.value = (day<10?'0'+day:day) +'-'+ (month1<10?'0'+month1:month1) +'-'+yea
  					</td>
  					<td width="286" height="16" align=left>
  					
- 				<% if(@session[:rrclustername]==nil or @session[:rrclustername]=="") %>		
+ 				<% if(session[:rrclustername]==nil or session[:rrclustername]=="") %>		
  						<% @s=Cluster.find(:all,:order => "ClusterName") %>
  						<%= collection_select(:machinedata, :ClusterName,  @s,  :ClusterName, :ClusterName,
                       {:prompt   => "Select ClusterName"}) %>
             	<%else%>
          			
-             	<% @cluster=Cluster.find(:all,:conditions=>["ClusterName<>?",@session[:rrclustername]],:order => "ClusterName")%>      											
+             	<% @cluster=Cluster.find(:all,:conditions=>["ClusterName<>?",session[:rrclustername]],:order => "ClusterName")%>      											
 					<select id="machinedata_ClusterName" name="machinedata[ClusterName]" >
-													<option value="<%= @session[:rrclustername] %>"><%= @session[:rrclustername] %></option>			
+													<option value="<%= session[:rrclustername] %>"><%= session[:rrclustername] %></option>			
      	 											<% @cluster.each do |c| %>
      	 											<option value="<%= c.ClusterName %>"><%= c.ClusterName %></option>
      	 											<% end %>
@@ -247,11 +247,11 @@ output.value = (day<10?'0'+day:day) +'-'+ (month1<10?'0'+month1:month1) +'-'+yea
           <td width="286" align="justify" >
           <!--<%= calendar_date_select_tag "date",Date.today.to_s,  :popup => "force" %> -->
 
-       <% if(@session[:ttdate1]==nil) %>
+       <% if(session[:ttdate1]==nil) %>
           <% date = Date.today-1 %>
      <%= calendar_date_select_tag "date1", date.strftime('%Y-%m-%d'),  :popup => "force" %>
      <%else%>
-     <%= calendar_date_select_tag "date1",@session[:ttdate1].to_s,  :popup => "force" %> 
+     <%= calendar_date_select_tag "date1",session[:ttdate1].to_s,  :popup => "force" %> 
 	<%end%>
      &nbsp;</tr>
 

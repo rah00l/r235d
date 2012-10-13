@@ -2,7 +2,7 @@ class ShopsController < ApplicationController
   layout 'adminlayout'
   require 'ftools'
   require 'chronic'
-  #before_filter :login_required
+  before_filter :login_required
   
   def roundval(val)
     if (val<0)
@@ -898,45 +898,50 @@ class ShopsController < ApplicationController
   end
 
   def search
-      @Cluster_Name=Cluster.find(:all,:order => "ClusterName")
+    begin
+      @session['cluster'] = params[:shop][:ClusterName]
+      redirect_to :action => 'list'
+    rescue Exception => ex
+    end
   end
 
   def getCluster
+    begin
       if(params[:ClusterName]!="" or params[:ClusterName]!=nil)
-        session['cluster']=params[:ClusterName]
+        #@session[:shopname]=params[:ShopName]
+        @session['cluster']=params[:ClusterName]
       end
       render :update do |page|
         page << "document.getElementById('shop_ShopName').focus();"
       end
+    rescue Exception=>exc
+    end
   end
 
   def index
+    @session['cluster'] = params[:shop][:ClusterName]
     @shops = Shop.find(:all,:conditions => ["ClusterName=?",params[:shop][:ClusterName]],:order => "ShopName")
-    respond_to do|format|
-			format.html
-      format.js {render :file => 'shops/index' }
-    end
+    render :action => 'list'
   end
+
+  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
+  verify :method => :post, :only => [ :destroy, :create, :update ],
+    :redirect_to => { :action => :list }
 
   def list
     @shop_pages, @shops = paginate :shops, :per_page => 10
   end
 
-#  def show
-#    @shop = Shop.find(params[:id])
-#  end
+  #  def show
+  #    @shop = Shop.find(params[:id])
+  #  end
 
   def new
     @shop = Shop.new
-     @shop_names = Cluster.find(:all,:order => "ClusterName")
-    
   end
 
   def create
-    @shop_names = Cluster.find(:all,:order => "ClusterName")
-    @cluster=Cluster.find(:all,:conditions=>["ClusterName<>?",session['cluster']],:order => "ClusterName")
     @shop = Shop.new(params[:shop])
-    respond_to do |format|
     if @shop.save
       @previousrecord = Previousrecord.new
       @previousrecord.Date=Date.today
@@ -945,11 +950,11 @@ class ShopsController < ApplicationController
       @previousrecord.Xcash=@shop.Cash
       @previousrecord.Xcredit=@shop.Credit
       @previousrecord.save
+         
       flash[:notice] =  '<font color=green size=3><b>SHOP WAS SUCCESSFULLY CREATED.</b></font>'
-      format.html { render :action => "new" }
+      redirect_to :action=>'new'
     else
-      format.html { render :action => "new" }
-    end
+      render :action => 'new'
     end
   end
 

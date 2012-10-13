@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   layout 'adminlayout'
-#  before_filter :login_required
+  before_filter :login_required
 
   def index
     list
@@ -74,27 +74,27 @@ class UsersController < ApplicationController
     User.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
-
+  
   def password
-    @user = @session['user']
-    case @request.method
+    @user = session['user']
+    case request.method
     when :post
-      if@params['new_password']==""     
+      if params['new_password']==""
         @msg= 'Please enter your new Password !'
       end
-      if@params['old_password']==""     
+      if params['old_password']==""
         @msg= 'Please enter your old Password !'
       end
-      if @params['new_password_confirmation']==""
+      if  params['new_password_confirmation']==""
         @msg= 'Please enter your Password again for confirmation!'
       end
-      unless @user.password_check?(@params['old_password'])
+      unless @user.password_check?(params['old_password'])
         @msg= 'You have introduced a wrong old password!'
       else
-        unless @params['new_password'] == @params['new_password_confirmation']
+        unless params['new_password'] == params['new_password_confirmation']
           @msg = 'Your new password and password confirmation dont match!'
         else
-          @msg = 'Your password was changed successfully!' if @user.change_password(@params['new_password'])
+          @msg = 'Your password was changed successfully!' if @user.change_password(params['new_password'])
         end
       end
     end

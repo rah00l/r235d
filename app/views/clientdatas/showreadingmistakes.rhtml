@@ -18,9 +18,9 @@
 <body>
 <h3>READING MISTAKE REPORT</h3>
 
-<h3><%=@session[:crname] %> --  <%=Date.parse(@session[:ttdate1]).strftime("%d-%m-%Y") %></h3>
+<h3><%=session[:crname] %> --  <%=Date.parse(session[:ttdate1]).strftime("%d-%m-%Y") %></h3>
 
-<% @data=Machinedata.find(:all,:select => "distinct (SHOP_NAME)",:conditions=>"CLUSTER_NAME='#{@session[:crname]}' 
+<% @data=Machinedata.find(:all,:select => "distinct (SHOP_NAME)",:conditions=>"CLUSTER_NAME='#{session[:crname]}' 
 and TRANS_DATE='#{session[:ttdate1]}' 
   ",:order => "SHOP_NAME")%>
 
@@ -37,7 +37,7 @@ and TRANS_DATE='#{session[:ttdate1]}'
 </tr>
 <% for i in @data %>
 
-<%@allmachines=Machinedata.find(:all,:conditions=>"CLUSTER_NAME='#{@session[:crname]}' 
+<%@allmachines=Machinedata.find(:all,:conditions=>"CLUSTER_NAME='#{session[:crname]}' 
 and TRANS_DATE='#{session[:ttdate1]}' 
 and SHOP_NAME='#{i.SHOP_NAME}' ",:order => "digitno,charno")%>
 

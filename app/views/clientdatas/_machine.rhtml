@@ -422,8 +422,8 @@
                                                         
                                                         
     <!--                                                    
-   <% if(@session[:MachineNo]==nil or @session[:MachineNo]=="") %>		
- 			 <%@machine=Machine.find_all(["ShopName=? and GroupID=?",session[:shopname],session[:Groupid]])%>
+   <% if(session[:MachineNo]==nil or session[:MachineNo]=="") %>		
+ 			 <%@machine=Machine.find(:all,["ShopName=? and GroupID=?",session[:shopname],session[:Groupid]])%>
   			<%= collection_select(:clientdata, :MachineNo,  @machine,  :MachineNo, :MachineNo,
                       {:prompt   => ""},
                       {:onkeypress => "#{remote_function(:url  => { :action => "update_machinename"},
@@ -434,7 +434,7 @@
                                                        :with => "'MachineNo='+value")};fnKeyDownHandler(this, event);",
                          :onKeyPress => "return fnKeyPressHandler_A(this, event);"} ) %>
                                                   
-                               <% @session[:MachineNo]=nil%>
+                               <% session[:MachineNo]=nil%>
                                           
        <%else%>
                                                             
@@ -454,7 +454,7 @@
         
         -->   
        
-        <% @machine=Machine.find(:all,:conditions=>["ShopName=? and GroupID=?",session[:shopname],@session[:Groupid]],:order=>'MachineNo')%>      											
+        <% @machine=Machine.find(:all,:conditions=>["ShopName=? and GroupID=?",session[:shopname],session[:Groupid]],:order=>'MachineNo')%>      											
 			<select id="clientdata_MachineNo" name="clientdata[MachineNo]"  onchange="<%=remote_function(:url => {:controller => 'clientdatas', :action => 'update_machinename'},:with => "'MachineNo='+value")-%>" onkeydown="fnKeyDownHandler(this, event);" onKeyUp="fnKeyUpHandler_A(this, event); return false;" onKeyPress = "return fnKeyPressHandler_A(this, event);" onBlur="javascript:this.value=this.value.toUpperCase();">
 													 
 													 <OPTION value="" style="COLOR:#ff0000;BACKGROUND-COLOR:#ffff00;"></OPTION>			
